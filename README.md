@@ -1,6 +1,4 @@
-Here’s a draft for your README:
 
----
 
 # Westline Bus and Shuttle Service Ticketing Web Application
 
@@ -33,7 +31,3 @@ The Westline Ticketing Web Application is a comprehensive solution designed to s
 - A responsive company website with integrated ticketing service.
 - Payment gateway integration for ticket purchases.
 - Real-time travel information updates.
-
----
-
-You can adjust the README to suit your specific needs as you progress with the development.
