@@ -30,6 +30,15 @@ Vehicle.init({
     capacity: {
         type: DataTypes.INTEGER,
         allowNull: false      
+    },
+
+    onJourney: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+
+    current_location: {
+        type: DataTypes.STRING,
     }
 }, {
     hooks: {
@@ -51,6 +60,11 @@ Vehicle.init({
                 } catch (error) {
                     console.error(`\nCould not add ${reg} item \n ${error}`);
                 }
+            }
+        },
+        beforeSave: async () => {
+            if(this.onJourney) {
+                this.current_location = null;
             }
         }
     },
