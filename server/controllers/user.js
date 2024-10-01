@@ -5,8 +5,8 @@
 const User = require('../models/user.js')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.JWT_SECRET;
 
+const secretKey = process.env.JWT_SECRET;
  
 
 const register_user = async (req, res, next) => {

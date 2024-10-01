@@ -64,7 +64,6 @@ const syncModel = async () => {
     }
 };
 
-syncModel()
 
 
 module.exports = User;

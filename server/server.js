@@ -6,7 +6,9 @@
 require('dotenv').config({ path: './config.env'});
 
 const express = require('express');
-const Destination = require('./models/destinations.js');
+const { initDatabase } = require('./models/initDB.js');
+
+initDatabase()
 
 
 

@@ -5,9 +5,8 @@ const { db_connection } = require('../dbconfig/db');
 
 
 const DESTINATIONS = [
-    "Eldoret", "Webuye", "Bungoma",
-    "Kakamega", "Kisumu", "Kitale",
-    "Busia", "Malaba", "Nairobi"
+    "Eldoret", "Nakuru", "Nairobi",
+    "Malaba", "Bungoma", "Kakamega"
 ];
 
 class Destination extends Model {
@@ -16,11 +15,6 @@ class Destination extends Model {
 
 
 Destination.init({
-    destination_id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
     name: {
         type: DataTypes.STRING,
         allowNull: false
