@@ -1,0 +1,52 @@
+
+
+.login-page {
+    height: 100vh;
+
+    color: #080814;
+}
+
+
+.login-form {
+    width: 40%;
+    height: 70vh;
+    border: 1px solid #080814;
+    margin: 4em auto;
+    padding-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form > div {
+    margin: .5em 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+label {
+    color: #080814;
+}
+
+input {
+    width: 80%;
+    height: 2.5em;
+    border-radius: 5px;
+    border: 1px solid #080814;
+    color: #080814;
+}
+
+.submit-btn {
+    height: 2.5em;
+    width: 80%;
+    margin-top: 1.5em;
+    background-color: #080814;
+    border-style: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: larger;
+    cursor: pointer;
+}
