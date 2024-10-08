@@ -1,24 +1,24 @@
 
 
-.login-page {
+.register-page {
     height: 100vh;
 
     color: #080814;
 }
 
 
-.login-form {
+.register-form {
     width: 40%;
-    height: 70vh;
+    /* height: 80vh; */
     border: 1px solid #080814;
-    margin: 4em auto;
+    margin: 1em auto;
     padding-top: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-form > div {
+.register-form > div {
     margin: .5em 0;
     width: 100%;
     display: flex;
@@ -51,12 +51,12 @@ input {
     cursor: pointer;
 }
 
-.not-signed {
+.already-signed {
     display: flex;
     width: 100%;
 }
 
-.not-signed a {
+.already-signed a {
     text-decoration: none;
     color: #313188;
     display: block;

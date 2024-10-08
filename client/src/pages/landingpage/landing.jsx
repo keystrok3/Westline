@@ -10,7 +10,9 @@ const Landing = () => {
             <header>
                 <h1>Westline</h1>
                 <div className="login-link">
-                    <Link to='/login'>Login</Link>
+                    <Link style={{ marginRight: '1em'}} to='/register'>Sign Up</Link>
+                    <hr />
+                    <Link style={{ marginLeft: '1em' }} to='/login'>Login</Link>
                 </div>
             </header>
         </div>
