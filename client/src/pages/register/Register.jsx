@@ -76,17 +76,25 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+
         try {
-            const response = await fetch('/', {
+            const response = await fetch('/api/auth/registeruser', {
                 method: 'POST',
                 headers: {
                     "Content-Type": 'application/json'
-                }
+                },
+                body: JSON.stringify({ ...formData })
             });
+
+            if(!response.ok) {
+                console.error(response.statusText)
+                alert(response.statusText)
+                return;
+            }
 
             const data = await response.json()
 
+            alert('Registered')
             console.log(data)
         } catch (error) {  
             console.error(error)
