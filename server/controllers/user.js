@@ -89,4 +89,43 @@ const verify_jwt = (req, res) => {
     })
 }
 
-module.exports = { register_user, login, verify_jwt }
+
+// logout
+const logout = async (req, res, next) => {
+    try {
+        // clear token b sending an expired cookie
+        res.cookie('token', '', {
+            httpOnly: true,
+            sameSite: 'Strict',
+            expires: new Date(0), // Set expiration to past date
+            secure: process.env.NODE_ENV === 'production', // Use secure in production
+            path: '/' // Ensure cookie is cleared from all paths
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Successfully logged out'
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error during logout'
+        });
+    }
+};
+
+
+
+const csrf_token = (req, res, next) => {
+    try {
+        res.json({ csrfToken: req.csrfToken() });
+    } catch (error) {
+        console.error('CSRF token generation failed:', error);
+        res.status(500).json({ 
+            error: 'Failed to generate CSRF token' 
+        });
+    }
+};
+
+module.exports = { register_user, login, verify_jwt, csrf_token, logout }
