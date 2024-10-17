@@ -9,7 +9,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 
 const { initDatabase } = require('./models/initDB.js');
-const csrfRoutes = require('./routes/csrfRoutes.js');
+
 initDatabase()
 
 
@@ -19,7 +19,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(csrfRoutes);
 
 app.use('/api/auth', require('./routes/user.js'));
 
