@@ -6,8 +6,10 @@
 require('dotenv').config({ path: './config.env'});
 
 const express = require('express');
-const { initDatabase } = require('./models/initDB.js');
+const cookieParser = require('cookie-parser');
 
+const { initDatabase } = require('./models/initDB.js');
+const csrfRoutes = require('./routes/csrfRoutes.js');
 initDatabase()
 
 
@@ -15,8 +17,11 @@ initDatabase()
 const app = express();
 
 
-app.use(express.json())
-app.use('/api/auth', require('./routes/user.js'))
+app.use(express.json());
+app.use(cookieParser());
+app.use(csrfRoutes);
+
+app.use('/api/auth', require('./routes/user.js'));
 
 
 const server = app.listen(5500, () => console.log(`listening on http://localhost:5500`));

@@ -1,15 +1,20 @@
 
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './login.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = () => {
-
     const [ loginData, setLoginData ] = useState({
         user_id: "",
         password: ""
     });
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChangeId = (e) => {
         setLoginData(prev => {
@@ -33,33 +38,27 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...loginData })
-            });
+        setIsLoading(true);
+        setError('');
 
-            const responseData = await response.json();
+        const result = await login(loginData);
 
-            if(response.ok) {
-                document.cookie(`token=${responseData.msg}; path=/; secure; samesite=strict`)
-                alert("logged in")
-                return;
-            }
-
-            alert(response.statusText)
-        } catch (error) {
-            console.error('Could not log in: ', error);
+        if(result.success) {
+            // Redirect to the attempted page or default to home
+            const from = location.state?.from || '/home';
+            navigate(from, { replace: true })
+        } else {
+            setError(result.error);
         }
+
+        setIsLoading(false);
     }
 
 
     return (
         <div className="login-page">
             <div className="login-form">
+                { error && <div className="error-message">{error}</div> }
                 <h1>Login</h1>
                 <div className="id" style={{ marginTop: '1.5em' }}>
                     <label htmlFor="id-field">ID or Passport Number</label>
@@ -72,7 +71,11 @@ const Login = () => {
 
 
                 <div className="submit">
-                    <button onClick={handleSubmit} className="submit-btn">Log In</button>
+                    <button 
+                        onClick={handleSubmit} 
+                        className="submit-btn"
+                        disabled={isLoading}
+                    >{isLoading ? "Logging In" : "Log In" }</button>
                 </div>
 
                 <div className="not-signed">

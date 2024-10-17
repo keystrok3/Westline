@@ -50,8 +50,13 @@ const login = async (req, res, next) => {
 
         // Generate JWT
         const token = jwt.sign({ userId: user_id }, secretKey, { expiresIn: '1hr' });
+        
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: 'Strict'
+        })
 
-        res.status(201).json({ success: true, msg: token });
+        res.status(201).json({ success: true });
 
     } catch (error) {
         console.error(`Could not log in: ${error}`);
@@ -59,7 +64,29 @@ const login = async (req, res, next) => {
             success: false, msg: "Server Error"
         });
     }
+};
+
+
+/**
+ * Verify jwt token
+*/
+const verify_jwt = (req, res) => {
+    const token = req.cookies.token;
+
+    if(!token) {
+        return res.json({ valid: false, message: 'No token found' });
+    }
+
+    // verify token
+    jwt.verify(token, secretKey, (err, decoded) => {
+        if(err) {
+            // token is invalid or expired
+            return res.json({ valid: false, message: 'Token is invalid or expired' });
+        }
+
+        // Token is valid
+        res.json({ valid: true, userId: decoded.userId})
+    })
 }
 
-
-module.exports = { register_user, login }
+module.exports = { register_user, login, verify_jwt }
