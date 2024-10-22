@@ -1,5 +1,8 @@
 import LogoutButton from "../../components/LogOutButton/LogoutButton";
 
+import './Home.css';
+
+
 const Home = () => {
     return (
         <div className="home-page">
