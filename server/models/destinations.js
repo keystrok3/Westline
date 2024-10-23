@@ -37,7 +37,9 @@ Destination.init({
         }
     },
     sequelize: db_connection,
-    tableName: 'destination'
+    tableName: 'destination',
+    createdAt: false,
+    updatedAt: false
 });
 
 

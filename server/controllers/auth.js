@@ -49,7 +49,11 @@ const login = async (req, res, next) => {
         }
 
         // Generate JWT
-        const token = jwt.sign({ userId: user_id }, secretKey, { expiresIn: '1hr' });
+        const token = jwt.sign({ 
+            user_id: foundUser.user_id, 
+            email: foundUser.email, 
+            role: foundUser.role
+         }, secretKey, { expiresIn: '1hr' });
         
         res.cookie("token", token, {
             httpOnly: true,

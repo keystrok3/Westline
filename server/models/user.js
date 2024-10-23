@@ -8,7 +8,9 @@ const { db_connection } = require('../dbconfig/db')
 
 
 class User extends Model {
-
+    static isAdmin() {
+        return this.role === 'admin';
+    }
 }
 
 
@@ -40,6 +42,11 @@ User.init(
 
         lastName: {
             type: DataTypes.STRING,
+            allowNull: false
+        },
+        role: {
+            type: DataTypes.ENUM('customer', 'admin'),
+            defaultValue: 'customer',
             allowNull: false
         }
     },

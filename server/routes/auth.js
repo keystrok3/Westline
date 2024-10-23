@@ -1,8 +1,8 @@
 
 
 const express = require('express');
-const { register_user, login, verify_jwt, logout, csrf_token } = require('../controllers/user');
-const csrfProtection = require('../middleware/csrfProtection');
+const { register_user, login, verify_jwt, logout, csrf_token } = require('../controllers/auth.js');
+const csrfProtection = require('../middleware/csrfProtection.js');
 
 
 const router = express.Router();
