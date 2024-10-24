@@ -17,7 +17,8 @@ class Destination extends Model {
 Destination.init({
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 }, {
     hooks: {

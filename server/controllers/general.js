@@ -41,6 +41,8 @@ const get_routes = async (req, res, next) => {
     try {
         const routes = await Routes.findAll();
 
+        console.log('\n\nroutes: ', routes[0], '\n\n')
+        
         return res.status(200).json({ success: true, data: routes });
     } catch (error) {
         console.error('\n routes not retrieved: \n', error)

@@ -50,9 +50,11 @@ const login = async (req, res, next) => {
 
         // Generate JWT
         const token = jwt.sign({ 
-            user_id: foundUser.user_id, 
-            email: foundUser.email, 
-            role: foundUser.role
+            user: {
+                user_id: foundUser.user_id, 
+                email: foundUser.email, 
+                role: foundUser.role
+            }
          }, secretKey, { expiresIn: '1hr' });
         
         res.cookie("token", token, {
@@ -60,7 +62,14 @@ const login = async (req, res, next) => {
             sameSite: 'Strict'
         })
 
-        res.status(201).json({ success: true });
+        res.status(201).json({ 
+            success: true, 
+            user: {
+                user_id: foundUser.user_id, 
+                email: foundUser.email, 
+                role: foundUser.role
+            }
+        });
 
     } catch (error) {
         console.error(`Could not log in: ${error}`);
@@ -89,7 +98,7 @@ const verify_jwt = (req, res) => {
         }
 
         // Token is valid
-        res.json({ valid: true, userId: decoded.userId})
+        res.json({ valid: true, userId: decoded.user})
     })
 }
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { user,  isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
 
@@ -12,7 +12,10 @@ const ProtectedRoute = ({ children }) => {
         if(!isAuthenticated) {
             return navigate('/login')
         }
-    }, [ isAuthenticated ])
+        if(user.role === 'admin') {
+            return navigate('/admin');
+        }
+    }, [ isAuthenticated, user, navigate ])
 
     return children;
 };

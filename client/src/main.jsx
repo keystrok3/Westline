@@ -9,23 +9,36 @@ import Register from './pages/register/Register.jsx';
 import Home from './pages/home/Home.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/protectedRoute.jsx';
+import AdminRoute from './components/adminRoute.jsx';
+import AdminHome from './pages/admin/AdminHome.jsx';
+import DataProvider from './context/DataContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path='/' element={<Landing />}/>
-          <Route 
-            path='/home' 
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            } />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-        </Routes>
+        <DataProvider>
+          <Routes>
+            <Route path='/' element={<Landing />}/>
+            <Route 
+              path='/admin'
+              element={
+                <AdminRoute>
+                  <AdminHome />
+                </AdminRoute>
+              }
+            />
+            <Route 
+              path='/home' 
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              } />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+          </Routes>
+        </DataProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

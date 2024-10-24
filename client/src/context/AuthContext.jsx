@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 
 
@@ -14,26 +15,29 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         verify_Token();
         fetchCsrfToken();
-    }, []);
+    }, [ isAuthenticated ]);
 
     const verify_Token = async () => {
       try {
         const res = await fetch('/api/auth/verify_token', {
           method: "GET",
-          credentials: 'include'
+          credentials: 'include',
+          
         });
 
         const data = await res.json()
 
-        setIsAuthenticated(data.valid)
-
-        if(data.valid && data.userId) {
-          setUser(data.userId)
+        if(data.valid && data.user) {
+          setIsAuthenticated(data.valid)
+          setUser({ 
+            ...data.user 
+          });
         }
 
       } catch (error) {
           console.error('Token verification failed:', error);
           setIsAuthenticated(false);
+          setUser(null);
       } finally {
         setIsLoading(false);
       }
@@ -70,7 +74,7 @@ export const AuthProvider = ({ children }) => {
           throw new Error("Login failed")
         }
 
-        setUser(data.userId);
+        setUser({ ...data.user });
         setIsAuthenticated(true);
 
         return { success: true };
