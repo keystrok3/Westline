@@ -28,12 +28,11 @@ Destination.init({
                 return;
             }
 
-            for(let dest of DESTINATIONS) {
-                try {
-                    await Destination.create({ name: dest })
-                } catch (error) {
-                    console.error(`Destination ${dest} not created: \n${error}`)
-                }
+            try {
+                await Destination.bulkCreate(DESTINATIONS.map(dest => ({ name: dest })), { ignoreDuplicates: true });
+                console.log('\n\ndestination table initialized\n')
+            } catch (error) {
+                console.log(`\nError initializing destination table`)
             }
         }
     },

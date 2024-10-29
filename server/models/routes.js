@@ -35,24 +35,34 @@ Routes.init({
         allowNull: false
     }
 }, {
+    indexes: [
+        {
+            unique: true,
+            fields: [ 'start_point', 'end_point']
+        }
+    ],
     hooks: {
-        afterSync: async (options, err) => {
-            if(err) {
-                console.error(`Error during afterSync: ${err}`);
-            }
-
-            for(let route of ROUTES) {
-                try {
-                    Routes.create({
-                        start_point: route[0],
-                        end_point: route[1]
-                    });
-
-                } catch (error) {
-                    console.error(`Route ${route[0]} - ${route[1]} not created: \n${error}`)
+        afterSync: async (options) => {
+            try {
+                const count = await Routes.count(); // Check if any data exists in the table
+        
+                if (count === 0) {
+                    await Routes.bulkCreate(
+                        ROUTES.map(([start, end]) => ({
+                            start_point: start,
+                            end_point: end
+                        })),
+                        { ignoreDuplicates: true }
+                    );
+                    console.log("Routes initialized successfully");
+                } else {
+                    console.log("Routes already initialized, skipping insertion.");
                 }
+            } catch (error) {
+                console.error(`\n\nError during route initialization:\n ${error}`);
             }
         }
+        
     },
     sequelize: db_connection,
     tableName: 'route',

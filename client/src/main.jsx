@@ -8,8 +8,8 @@ import Landing from './pages/landingpage/landing.jsx';
 import Register from './pages/register/Register.jsx';
 import Home from './pages/home/Home.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
-import ProtectedRoute from './components/protectedRoute.jsx';
-import AdminRoute from './components/adminRoute.jsx';
+import ProtectedRoute from './components/ProtectedComponents/protectedRoute.jsx';
+import AdminRoute from './components/ProtectedComponents/adminRoute.jsx';
 import AdminHome from './pages/admin/AdminHome.jsx';
 import DataProvider from './context/DataContext.jsx';
 
