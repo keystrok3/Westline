@@ -4,7 +4,7 @@ const Trips = require("../models/trips");
 
 const create_trip = async (req, res, next) => {
     const { route_id, vehicle_reg, departure, arrival } = req.body;
-
+    console.log('\n\n\nCREATE TRIP: ', req.body)
     try {
         const new_trip = await Trips.create({
             route_id: route_id,
