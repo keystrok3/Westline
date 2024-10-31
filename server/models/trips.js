@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model, DataTypes, where } = require("sequelize");
 const { db_connection } = require("../dbconfig/db");
 
 const Routes = require("./routes");
@@ -45,6 +45,15 @@ Trips.init({
     },
 
 }, {
+    hooks: {
+        afterCreate: async (trip, options) => {
+            try {
+                await Vehicle.update({ onJourney: true }, { where: { vehicle_reg: trip.vehicle_reg }})
+            } catch (error) {
+                console.error('Error updating Vehicle status');
+            }
+        } 
+    },
     sequelize: db_connection,
     tableName: 'trip'
 });

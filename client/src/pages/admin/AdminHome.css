@@ -1,0 +1,9 @@
+
+
+.select-page {
+    width: 70%;
+    margin: 2em auto;
+    display: flex;
+    justify-content: space-between;
+}
+

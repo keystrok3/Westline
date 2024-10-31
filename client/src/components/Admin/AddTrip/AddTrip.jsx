@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { DataContext } from "../../context/DataContext.jsx";
+import { useContext, useState } from "react";
+import { DataContext } from "../../../context/DataContext.jsx";
 import { DatePicker, Stack, Button } from 'rsuite';
 
 import './AddTrip.css';
@@ -15,7 +15,13 @@ const AddTrip = () => {
     })
 
     const handSubmit = async () => {
-        console.log('Trip selection: ', trip_selection)
+        const empty_entry = Object.keys(trip_selection).filter(key => {
+            if(trip_selection[key] === "") return key;
+        });
+
+        if(empty_entry.length > 0) {
+            return alert("Please select all entries")
+        }
         try {
             const response = await fetch('/api/admin/create_trip', {
                 method: "POST",
@@ -80,7 +86,7 @@ const AddTrip = () => {
             <div className="selects">
                 <div className="route">
                     <h3>Pick Route</h3>
-                    <select onChange={handleChooseRoute} value={trip_selection.route} className="route-select">
+                    <select onChange={handleChooseRoute} className="route-select">
                         {
                             tripRoutes.map((route, idx) => {
                                 return (
@@ -99,10 +105,10 @@ const AddTrip = () => {
 
                 <div className="vehicle">
                     <h3>Pick Vehicle</h3>
-                    <select onChange={handleChooseVehicle} value={trip_selection.vehicle} className="vehicle-select">
+                    <select onChange={handleChooseVehicle} className="vehicle-select">
                         {
-                            vehicles.map((vehicle, idx) => {
-                                if(vehicle.onJourney) return;
+                            vehicles.filter(vehicle => vehicle.onJourney === false).map((vehicle, idx) => {
+                                
                                 return (
                                     <option key={`${idx}`}>
                                         { vehicle.vehicle_reg}
