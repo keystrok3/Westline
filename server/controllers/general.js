@@ -1,6 +1,8 @@
 const Destination = require("../models/destinations");
 const Routes = require("../models/routes");
 const Vehicle = require("../models/vehicles");
+const Trips = require("../models/trips");
+const moment = require('moment');
 
 /**
  * Get all destinations
@@ -48,6 +50,26 @@ const get_routes = async (req, res, next) => {
         console.error('\n routes not retrieved: \n', error)
         return res.status(500).json({ success: false, msg: "Data not retrieved. Server error" });
     }
-}
+};
 
-module.exports = { get_locations, get_vehicles, get_routes }
+
+/**
+ * Get trips created
+ * */ 
+const get_trips = async (req, res, next) => {
+    try {
+        const trips = await Trips.findAll();
+        const tripdata = trips.filter(trip => {
+            if(moment(trip.arrival_time).isAfter(new Date())) {
+                return trip
+            }
+        });
+        console.log(tripdata)
+
+        return res.status(200).json({ success: true, data: tripdata });
+    } catch (error) {
+        console.error(`\n\n Trips not retrieved: ${error}\n\n`)
+        return res.status(500).json({ success: false, msg: "Data not retrieved. Server error" });
+    }
+}
+module.exports = { get_locations, get_vehicles, get_routes, get_trips }

@@ -1,0 +1,23 @@
+
+
+.view-trips {
+    margin: 1em auto;
+    width: 80%;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+}
+
+thead td {
+    font-weight: 600;
+}
+
+td {
+    border: 1px solid #080814;
+    text-align: center;
+    padding: .5em;
+}
